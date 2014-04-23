@@ -23,6 +23,14 @@
             android:name="com.yanniboi.bibleinoneyear.RefreshActivity"
             android:label="@string/title_activity_refresh" >
         </activity>
+        <activity
+            android:name="com.yanniboi.bibleinoneyear.VideoActivity"
+            android:label="@string/title_activity_video"
+            android:screenOrientation="nosensor"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <meta-data android:name="minVersion" android:value="8"/>
+            <meta-data android:name="isLaunchableActivity" android:value="true"/>
+        </activity>
     </application>
 
 </manifest>

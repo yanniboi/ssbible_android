@@ -12,5 +12,6 @@
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_refresh">RefreshActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_video">VideoActivity</string>
 
 </resources>
