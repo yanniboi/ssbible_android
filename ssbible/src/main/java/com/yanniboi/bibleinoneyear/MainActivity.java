@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.youtube.player.YouTubeIntents;
 
@@ -35,6 +36,12 @@ public class MainActivity extends ActionBarActivity
      * Database connection.
      */
     private Database db;
+
+    /**
+     * Page being selected.
+     */
+    private Entry page;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +71,7 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onSectionAttached(int number) {
-        Entry page = db.getPage(number);
+        page = db.getPage(number);
         mTitle = page.getTitle();
     }
 
@@ -107,6 +114,14 @@ public class MainActivity extends ActionBarActivity
 
         }
 
+        if (item.getItemId() == R.id.action_example) {
+            Intent i = new Intent(getApplicationContext(), VideoActivity.class);
+            i.putExtra("page", page.getNid());
+            startActivity(i);
+            Toast.makeText(getApplicationContext(), "Example action.", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -119,6 +134,8 @@ public class MainActivity extends ActionBarActivity
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+
+        private static Entry page;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -145,7 +162,7 @@ public class MainActivity extends ActionBarActivity
 
             int pageId = getArguments().getInt(ARG_SECTION_NUMBER);
             Database db = new Database(getActivity());
-            Entry page = db.getPage(pageId);
+            page = db.getPage(pageId);
 
             label.setText(page.getTitle());
             description.setText(page.getAuthor());

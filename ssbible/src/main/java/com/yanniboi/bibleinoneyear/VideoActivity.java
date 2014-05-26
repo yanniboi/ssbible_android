@@ -15,20 +15,30 @@ public class VideoActivity extends YouTubeBaseActivity implements
 
     private static final int RECOVERY_DIALOG_REQUEST = 1;
     public static final String DEVELOPER_KEY = "AIzaSyD5M5EF9NVTFgN9Zu6TxUt-721fOEjLkaQ";
+    private static int nid;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_video);
+        Intent passedIntent = getIntent();
+        nid = passedIntent.getIntExtra("page", 0);
+
         Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(getApplication(), "wKJ9KzGQq0w", true, false);
+
+        if (nid != 0) {
+            Database db = new Database(getApplicationContext());
+            Entry page = db.getPagebyNid(nid);
+            intent = YouTubeIntents.createPlayVideoIntentWithOptions(getApplication(), page.getYoutube(), true, false);
+        }
+
+        //setContentView(R.layout.activity_video);
         startActivity(intent);
     }
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider,
                                         YouTubeInitializationResult errorReason) {
-        String test = "test";
     }
 
     @Override

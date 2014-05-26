@@ -5,10 +5,28 @@ package com.yanniboi.bibleinoneyear;
  */
 public class Entry {
 
-    private int id;
+    /**
+     * Header item type.
+     */
+    public static final int HEADER_ITEM = 0;
+
+    /**
+     * Category item type.
+     */
+    public static final int CATEGORY_ITEM = 1;
+
+    /**
+     * Entry item type.
+     */
+    public static final int ENTRY_ITEM = 2;
+
+    private String id;
     private int nid;
     private String title;
+    private int type;
+    private int unreadCount;
     private String author;
+    private String youtube;
 
     public Entry(){}
 
@@ -26,28 +44,44 @@ public class Entry {
         this.author = author;
     }
 
-    public int getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
     public int getNid() {
-        return this.nid;
+        return nid;
+    }
+
+    public int getType() {
+        return type;
     }
 
     public String getTitle() {
-        return this.title;
+        return title;
     }
 
     public String getAuthor() {
-        return this.author;
+        return author;
     }
 
-    public void setId(int pageId) {
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+
+    public String getYoutube() {
+        return youtube;
+    }
+
+    public void setId(String pageId) {
         this.id = pageId;
     }
 
     public void setNid(int pageNid) {
         this.nid = pageNid;
+    }
+
+    public void setType(int pageType) {
+        this.type = pageType;
     }
 
     public void setTitle(String pageTitle) {
@@ -56,6 +90,14 @@ public class Entry {
 
     public void setAuthor(String pageAuthor) {
         this.author = pageAuthor;
+    }
+
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
+    }
+
+    public void setYoutube(String pageYoutube) {
+        this.youtube = pageYoutube;
     }
 
 

@@ -25,8 +25,9 @@ public class Database extends SQLiteOpenHelper {
     private static final String KEY_NID = "nid";
     private static final String KEY_TITLE = "title";
     private static final String KEY_AUTHOR = "author";
+    private static final String KEY_YOUTUBE = "youtube";
 
-    private static final String[] COLUMNS = {KEY_ID,KEY_NID,KEY_TITLE,KEY_AUTHOR};
+    private static final String[] COLUMNS = {KEY_ID,KEY_NID,KEY_TITLE,KEY_AUTHOR, KEY_YOUTUBE};
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,20 +40,18 @@ public class Database extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "nid INTEGER, "+
                 "title TEXT, "+
+                "youtube TEXT, "+
                 "author TEXT )";
 
 
         ContentValues values = new ContentValues();
-        values.put(KEY_TITLE, "Page 1"); // get title
+        values.put(KEY_TITLE, "Welcome to the App"); // get title
         values.put(KEY_NID, 0); // get title
         values.put(KEY_AUTHOR, "yanniboi"); // get author
+        values.put(KEY_YOUTUBE, "icO_tRjilDI"); // get author
 
 
         db.execSQL(CREATE_PAGE_TABLE);
-        db.insert(TABLE_PAGES, // table
-                null, //nullColumnHack
-                values);
-        values.put(KEY_TITLE, "Page 2"); // get author
         db.insert(TABLE_PAGES, // table
                 null, //nullColumnHack
                 values);
@@ -79,6 +78,7 @@ public class Database extends SQLiteOpenHelper {
         values.put(KEY_NID, page.getNid()); // get nid
         values.put(KEY_TITLE, page.getTitle()); // get title
         values.put(KEY_AUTHOR, page.getAuthor()); // get author
+        values.put(KEY_YOUTUBE, page.getYoutube()); // get author
 
         // 3. insert
         db.insert(TABLE_PAGES, // table
@@ -111,7 +111,7 @@ public class Database extends SQLiteOpenHelper {
 
         // 4. build page object
         Entry page = new Entry();
-        page.setId(Integer.parseInt(cursor.getString(0)));
+        page.setId(cursor.getString(0));
         if (cursor.getString(1) == null) {
             page.setNid(0);
         }
@@ -155,7 +155,7 @@ public class Database extends SQLiteOpenHelper {
 
         // 4. build book object
         Entry page = new Entry();
-        page.setId(Integer.parseInt(cursor.getString(0)));
+        page.setId(cursor.getString(0));
         if (cursor.getString(1) == null) {
             page.setNid(0);
         }
@@ -164,6 +164,7 @@ public class Database extends SQLiteOpenHelper {
         }
         page.setTitle(cursor.getString(2));
         page.setAuthor(cursor.getString(3));
+        page.setYoutube(cursor.getString(4));
 
         //log
         Log.d("getBook("+nid+")", page.toString());
@@ -187,7 +188,7 @@ public class Database extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 page = new Entry();
-                page.setId(Integer.parseInt(cursor.getString(0)));
+                page.setId(cursor.getString(0));
                 if (cursor.getString(1) == null) {
                     page.setNid(0);
                 }

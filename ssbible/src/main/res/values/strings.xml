@@ -14,4 +14,15 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_video">VideoActivity</string>
 
+    <!-- Drawer Strings -->
+    <string name="favicon">Favicon</string>
+    <string name="category">Category</string>
+
+    <string name="latest">Latest</string>
+    <string name="unread">Unread</string>
+    <string name="all">All</string>
+    <string name="starred">Starred</string>
+    <string name="subscriptions">Subscriptions</string>
+
+
 </resources>

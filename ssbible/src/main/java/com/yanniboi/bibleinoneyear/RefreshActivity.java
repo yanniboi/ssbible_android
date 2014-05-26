@@ -18,6 +18,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 public class RefreshActivity extends Activity {
 
@@ -83,9 +87,14 @@ public class RefreshActivity extends Activity {
 
                         JSONObject node = nodes.getJSONObject(i);
                         Entry page = new Entry();
-                        page.setNid(node.getInt("nid"));
-                        page.setTitle(node.getString("title"));
+                        String nid = node.getJSONArray("nid").getJSONObject(0).getString("value");
+                        String title = node.getJSONArray("title").getJSONObject(0).getString("value");
+                        String youtube = node.getJSONArray("field_youtube_id").getJSONObject(0).getString("value");
+
+                        page.setNid(Integer.parseInt(nid));
+                        page.setTitle(title);
                         page.setAuthor("yanniboi");
+                        page.setYoutube(youtube);
                         db.addPage(page);
                         // Update progress
                         int update = (i * 100 / count);
@@ -134,8 +143,9 @@ public class RefreshActivity extends Activity {
         try {
 
             //URL downloadFileUrl = new URL("http://bible.soulsurvivor.com/phonegap/node.json");
-            URL downloadFileUrl = new URL("http://bible.soulsurvivor.com/export");
+            URL downloadFileUrl = new URL("http://bible.soulsurvivor.com/rest/views/days");
             HttpURLConnection httpConnection = (HttpURLConnection) downloadFileUrl.openConnection();
+            httpConnection.setRequestProperty("Accept", "application/json");
             siteStatus = httpConnection.getResponseCode();
             if (siteStatus == 200) {
                 InputStream inputStream = httpConnection.getInputStream();
@@ -167,7 +177,10 @@ public class RefreshActivity extends Activity {
 
         for (int i = 0; i < nodes.length(); i++) {
             JSONObject node = nodes.getJSONObject(i);
-            int druaplId = node.getInt("nid");
+            String nid = node.getJSONArray("nid").getJSONObject(0).getString("value");
+            String test = nid;
+
+            int druaplId = Integer.parseInt(nid);
             if (db.getPagebyNid(druaplId).getNid() == 0) {
                 newNodes.put(node);
             }
